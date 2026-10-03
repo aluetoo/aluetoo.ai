@@ -332,31 +332,50 @@
       line-height: 1.4;
     }
 
-    /* ========== GLASSMORPHISM (exactement sur les zones des photos) ========== */
+    /* ========== GLASSMORPHISM FORT ========== */
+    .alu-topbar {
+      background: rgba(19, 19, 20, 0.55) !important;
+      backdrop-filter: blur(24px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+
     .alu-composer {
-      background: rgba(30, 31, 32, 0.55) !important;
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.09) !important;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+      background: rgba(30, 31, 32, 0.42) !important;
+      backdrop-filter: blur(32px) saturate(170%) !important;
+      -webkit-backdrop-filter: blur(32px) saturate(170%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.45) !important;
       border-radius: 24px !important;
     }
+
     .alu-upgrade-btn {
-      background: rgba(66, 133, 244, 0.75) !important;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      box-shadow: 0 4px 20px rgba(66, 133, 244, 0.25);
+      background: rgba(66, 133, 244, 0.65) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.22) !important;
+      box-shadow: 0 4px 24px rgba(66, 133, 244, 0.3) !important;
       transition: all 0.2s ease;
     }
     .alu-upgrade-btn:hover {
-      background: rgba(66, 133, 244, 0.9) !important;
+      background: rgba(66, 133, 244, 0.85) !important;
       transform: translateY(-1px);
     }
+
     .alu-model-pill {
-      background: rgba(42, 43, 45, 0.6) !important;
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(42, 43, 45, 0.55) !important;
+      backdrop-filter: blur(14px) !important;
+      border: 1px solid rgba(255,255,255,0.1) !important;
+    }
+
+    .alu-conversation {
+      background: transparent !important;
+    }
+    .alu-main {
+      background: #131314;
     }
 
     @media screen and (max-width: 768px) {
@@ -516,7 +535,7 @@
           <div id="activity-list"></div>
         </div>
 
-        <!-- Vue Code (artefacts directs + aperçu) -->
+        <!-- Vue Code -->
         <div class="alu-code-view hidden" id="code-view">
           <div id="code-artifacts-list"></div>
         </div>
@@ -861,7 +880,6 @@
           ${isHtml ? `<div class="alu-code-live-preview" style="display:none;"><iframe sandbox="allow-scripts"></iframe></div>` : ""}
         `;
 
-        // Bouton Copier
         const copyBtn = card.querySelector(".alu-code-copy-btn");
         copyBtn.addEventListener("click", () => {
           navigator.clipboard.writeText(item.code).then(() => {
@@ -874,7 +892,6 @@
           });
         });
 
-        // Bouton Aperçu (HTML)
         if (isHtml) {
           const previewBtn = card.querySelector(".alu-code-preview-btn");
           const previewBox = card.querySelector(".alu-code-live-preview");
