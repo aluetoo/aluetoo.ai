@@ -190,33 +190,58 @@
     }
 
     /* ==============================================================
-       GLASSMORPHISM - TOPBAR + COMPOSER - VERSION PREMIUM
+       GLASSMORPHISM V2 - FIX REEL - OVERLAY + BLUR VISIBLE
        ============================================================== */
+    .alu-main {
+      position: relative !important;
+      overflow: hidden !important;
+      background: #131314 !important;
+    }
+
     .alu-topbar {
-      position: sticky !important;
+      position: absolute !important;
       top: 0 !important;
-      z-index: 20 !important;
-      background: rgba(30, 31, 32, 0.42) !important;
-      backdrop-filter: blur(22px) saturate(180%) !important;
-      -webkit-backdrop-filter: blur(22px) saturate(180%) !important;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.22) !important;
+      left: 0 !important;
+      right: 0 !important;
+      height: 64px !important;
+      z-index: 30 !important;
+      background: rgba(30, 31, 32, 0.55) !important;
+      backdrop-filter: blur(20px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.10) !important;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25) !important;
+    }
+
+    .alu-conversation {
+      position: relative !important;
+      height: 100% !important;
+      overflow-y: auto !important;
+      padding-top: 80px !important;
+      padding-bottom: 160px !important;
+      background: transparent !important;
     }
 
     .alu-composer-wrap {
-      position: sticky !important;
+      position: absolute !important;
       bottom: 0 !important;
-      z-index: 20 !important;
-      background: linear-gradient(to top, rgba(19,19,20,0.92) 0%, rgba(19,19,20,0.0) 100%) !important;
-      padding-top: 16px !important;
+      left: 0 !important;
+      right: 0 !important;
+      z-index: 30 !important;
+      background: transparent !important;
+      background-image: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      padding: 0 16px 16px 16px !important;
+      pointer-events: none !important;
     }
 
     .alu-composer {
-      background: rgba(42, 43, 45, 0.58) !important;
-      backdrop-filter: blur(28px) saturate(180%) !important;
-      -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
-      border: 1px solid rgba(255, 255, 255, 0.12) !important;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+      pointer-events: auto !important;
+      background: rgba(38, 39, 41, 0.75) !important;
+      backdrop-filter: blur(24px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.14) !important;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
       border-radius: 24px !important;
     }
 
