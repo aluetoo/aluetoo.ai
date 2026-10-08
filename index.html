@@ -4,13 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aluetoo AI</title>
+  <meta charset="UTF-8">
   <link rel="icon" href="./favicon.ico?v=3" type="image/x-icon">
   <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png?v=3">
   <link rel="apple-touch-icon" href="./apple-touch-icon.png?v=3">
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-  <script> tailwind.config = { corePlugins: { preflight: true } } </script>
+  <script> 
+    tailwind.config = {
+      corePlugins: { preflight: true }
+    }
+  </script>
   <link rel="stylesheet" href="style.css">
   <style>
     /* --- DESIGN DE L'HISTORIQUE PREMIUM --- */
@@ -26,298 +32,279 @@
       transition: all 0.2s ease;
       position: relative;
     }
-    .alu-history-item-container:hover { background-color: #2a2b2d; border-color: #303133; }
-    .alu-history-item-container.pinned { border-color: rgba(138, 180, 248, 0.4); background-color: rgba(30, 31, 32, 0.8); }
-    .alu-history-btn-text {
-      flex: 1; text-align: left; font-size: 0.8rem; color: #e3e3e3; white-space: nowrap;
-      overflow: hidden; text-overflow: ellipsis; background: none; border: none; cursor: pointer; padding: 4px 0;
+    .alu-history-item-container:hover {
+      background-color: #2a2b2d;
+      border-color: #303133;
     }
-    .alu-history-actions { display: flex; align-items: center; gap: 6px; opacity: 0.4; transition: opacity 0.2s ease; }
-    .alu-history-item-container:hover .alu-history-actions { opacity: 1; }
-    .alu-action-icon { font-size: 16px !important; cursor: pointer; color: #9aa0a6; transition: color 0.2s; }
-    .alu-action-icon:hover { color: #ffffff; }
-    .alu-action-icon.delete:hover { color: #ea4335; }
-    .alu-action-icon.pinned-active { color: #8ab4f8; }
+    .alu-history-item-container.pinned {
+      border-color: rgba(138, 180, 248, 0.4);
+      background-color: rgba(30, 31, 32, 0.8);
+    }
+    .alu-history-btn-text {
+      flex: 1;
+      text-align: left;
+      font-size: 0.8rem;
+      color: #e3e3e3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px 0;
+    }
+    .alu-history-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      opacity: 0.4;
+      transition: opacity 0.2s ease;
+    }
+    .alu-history-item-container:hover .alu-history-actions {
+      opacity: 1;
+    }
+    .alu-action-icon {
+      font-size: 16px !important;
+      cursor: pointer;
+      color: #9aa0a6;
+      transition: color 0.2s;
+    }
+    .alu-action-icon:hover {
+      color: #ffffff;
+    }
+    .alu-action-icon.delete:hover {
+      color: #ea4335;
+    }
+    .alu-action-icon.pinned-active {
+      color: #8ab4f8;
+    }
     /* --- MENU DES MODELES EN BAS --- */
     .alu-model-menu-bottom {
-      position: absolute; bottom: 110%; right: 0; background-color: #1e1f20; border: 1px solid #303133;
-      border-radius: 16px; padding: 8px; width: 240px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 40;
-      opacity: 0; transform: translateY(10px) scale(0.95); pointer-events: none;
+      position: absolute;
+      bottom: 110%;
+      right: 0;
+      background-color: #1e1f20;
+      border: 1px solid #303133;
+      border-radius: 16px;
+      padding: 8px;
+      width: 240px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      z-index: 40;
+      opacity: 0;
+      transform: translateY(10px) scale(0.95);
+      pointer-events: none;
       transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .alu-model-menu-bottom.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
-    .alu-model-pill-btn { cursor: pointer; user-select: none; transition: background-color 0.2s; }
-    .alu-model-pill-btn:hover { background-color: rgba(255,255,255,0.08); }
-    /* --- PILLULES DE SOURCE STYLE RECHERCHE GOOGLE --- */
-    .alu-source-badge {
-      display: inline-flex; align-items: center; gap: 4px; background-color: #2a2b2d; border: 1px solid #303133;
-      border-radius: 12px; padding: 2px 8px; font-size: 11px; color: #bdc1c6; margin-left: 6px; vertical-align: middle; text-decoration: none;
-    }
-    .alu-source-badge:hover { background-color: #333537; }
-    .alu-source-icon { width: 12px; height: 12px; border-radius: 2px; }
-    /* --- STYLES DES MESSAGES ET RENDU MARKDOWN --- */
-    .alu-msg-content { font-size: 0.95rem; line-height: 1.6; }
-    .alu-msg-content h1, .alu-msg-content h2, .alu-msg-content h3 { font-weight: 600; color: #ffffff; margin-top: 1rem; margin-bottom: 0.5rem; }
-    .alu-msg-content h1 { font-size: 1.5rem; } .alu-msg-content h2 { font-size: 1.3rem; } .alu-msg-content h3 { font-size: 1.1rem; }
-    .alu-msg-content p { margin-bottom: 0.75rem; }
-    .alu-msg-content ul, .alu-msg-content ol { margin-left: 1.5rem; margin-bottom: 0.75rem; }
-    .alu-msg-content ul { list-style-type: disc; } .alu-msg-content ol { list-style-type: decimal; }
-    .alu-msg-content li { margin-bottom: 0.25rem; }
-    .alu-msg-content table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; background-color: #1a1b1c; border-radius: 8px; overflow: hidden; }
-    .alu-msg-content th, .alu-msg-content td { border: 1px solid #303133; padding: 10px 12px; text-align: left; }
-    .alu-msg-content th { background-color: #202122; color: #ffffff; font-weight: 600; }
-    .alu-msg-content tr:nth-child(even) { background-color: #1e1f20; }
-    .alu-msg-content code { font-family: monospace; background-color: #2a2b2d; padding: 2px 6px; border-radius: 4px; font-size: 0.85rem; color: #f2f2f2; }
-    /* GLASSMORPHISM V2 */
-    .alu-main { position: relative !important; overflow: hidden !important; background: #131314 !important; }
-    .alu-topbar {
-      position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; height: 64px !important; z-index: 30 !important;
-      background: rgba(30, 31, 32, 0.55) !important; backdrop-filter: blur(20px) saturate(180%) !important;
-      -webkit-backdrop-filter: blur(20px) saturate(180%) !important; border-bottom: 1px solid rgba(255, 255, 255, 0.10) !important;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25) !important;
-    }
-    .alu-conversation { position: relative !important; height: 100% !important; overflow-y: auto !important; padding-top: 80px !important; padding-bottom: 160px !important; background: transparent !important; }
-    .alu-composer-wrap {
-      position: absolute !important; bottom: 0 !important; left: 0 !important; right: 0 !important; z-index: 30 !important;
-      background: transparent !important; background-image: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
-      padding: 0 16px 16px 16px !important; pointer-events: none !important;
-    }
-    .alu-composer {
-      pointer-events: auto !important; background: rgba(38, 39, 41, 0.75) !important; backdrop-filter: blur(24px) saturate(180%) !important;
-      -webkit-backdrop-filter: blur(24px) saturate(180%) !important; border: 1px solid rgba(255, 255, 255, 0.14) !important;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important; border-radius: 24px !important;
-    }
-  </style>
-  <!-- ===================== SIDEBAR ULTRA MINIMAL 3 ETATS - COMPLET ===================== -->
-  <style>
-    /* ===== SIDEBAR ULTRA MINIMAL 3 ETATS - EXPANDED ===== */
-    :root {
-      --sidebar-w: 280px;
-      --sidebar-mini-w: 56px;
-      --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
-      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .alu-app {
-      display: flex !important;
-      height: 100vh !important;
-      overflow: hidden !important;
-    }
-    .alu-sidebar {
-      width: var(--sidebar-w) !important;
-      min-width: var(--sidebar-w) !important;
-      height: 100vh !important;
-      position: relative !important;
-      flex-shrink: 0 !important;
-      border-right: 1px solid rgba(255,255,255,0.06) !important;
-      transition:
-        width 0.45s var(--ease-spring),
-        min-width 0.45s var(--ease-spring),
-        transform 0.5s var(--ease-spring),
-        opacity 0.35s ease !important;
-      will-change: width, transform;
-      overflow: hidden !important;
-      background-color: #1e1f20 !important;
-    }
-    .alu-sidebar::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 50%;
-      height: 100%;
-      background: linear-gradient(
-        105deg,
-        transparent 0%,
-        rgba(255,255,255,0.05) 50%,
-        transparent 100%
-      );
-      transform: translateX(-130%) skewX(-12deg);
-      pointer-events: none;
-      z-index: 10;
-      opacity: 0;
-    }
-    .alu-sidebar.sweeping::after {
+    .alu-model-menu-bottom.show {
       opacity: 1;
-      animation: aluSweep 0.75s var(--ease-spring) forwards;
-    }
-    @keyframes aluSweep {
-      0% {
-        transform: translateX(-130%) skewX(-12deg);
-      }
-      100% {
-        transform: translateX(350%) skewX(-12deg);
-      }
-    }
-    /* ETAT 2: MINI 56px */
-    .alu-sidebar.mini {
-      width: var(--sidebar-mini-w) !important;
-      min-width: var(--sidebar-mini-w) !important;
-    }
-    .hide-on-mini {
-      transition:
-        opacity 0.2s ease,
-        transform 0.3s var(--ease-spring);
-    }
-    .alu-sidebar.mini .hide-on-mini {
-      opacity: 0 !important;
-      transform: translateX(-12px);
-      pointer-events: none;
-      width: 0;
-      overflow: hidden;
-    }
-    .alu-sidebar.mini .alu-nav-item {
-      justify-content: center !important;
-      padding: 10px !important;
-    }
-    .alu-sidebar.mini .alu-new-chat {
-      width: 36px !important;
-      height: 36px !important;
-      padding: 0 !important;
-      margin: 10px auto !important;
-      border-radius: 10px !important;
-    }
-    .alu-sidebar.mini #search-history,
-    .alu-sidebar.mini .alu-history-section,
-    .alu-sidebar.mini .alu-loc-block,
-    .alu-sidebar.mini .alu-user-info,
-    .alu-sidebar.mini .alu-history-empty {
-      opacity: 0;
-      pointer-events: none;
-      height: 0;
-      overflow: hidden;
-      margin: 0;
-      padding: 0;
-    }
-    .alu-sidebar.mini .alu-user-row {
-      justify-content: center !important;
-    }
-    .alu-sidebar.mini .alu-brand-name {
-      display: none !important;
-    }
-    /* ETAT 3: FERME COMPLET - DISPARAIT */
-    .alu-sidebar.hidden-sidebar {
-      width: 0 !important;
-      min-width: 0 !important;
-      transform: translateX(-100%) !important;
-      opacity: 0 !important;
-      border-right: none !important;
-      pointer-events: none !important;
-    }
-    /* BOUTON FLOTTANT QUAND FERME */
-    #sidebar-fab {
-      position: fixed;
-      left: 16px;
-      top: 16px;
-      z-index: 35;
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: #1e1f20;
-      border: 1px solid #303133;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-      opacity: 0;
-      transform: scale(0.8) translateY(-10px);
-      pointer-events: none;
-      transition: all 0.35s var(--ease-spring);
-    }
-    #sidebar-fab.show {
-      opacity: 1;
-      transform: scale(1) translateY(0);
+      transform: translateY(0) scale(1);
       pointer-events: auto;
     }
-    #sidebar-fab:hover {
-      background: #2a2b2d;
-      transform: scale(1.05);
-    }
-    .alu-collapse-btn {
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-      background: #2a2b2d;
-      border: 1px solid rgba(255,255,255,0.08);
-      color: #9aa0a6;
+    .alu-model-pill-btn {
       cursor: pointer;
-      transition: all 0.2s;
-      flex-shrink: 0;
+      user-select: none;
+      transition: background-color 0.2s;
     }
-    .alu-collapse-btn:hover {
-      background: #333537;
-      color: white;
+    .alu-model-pill-btn:hover {
+      background-color: rgba(255,255,255,0.08);
     }
-    .alu-sidebar.mini .alu-collapse-btn {
-      transform: rotate(180deg);
-    }
-    .alu-sidebar.mini .alu-nav-item {
-      position: relative;
-    }
-    .alu-sidebar.mini .alu-nav-item:hover::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      left: 52px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: #2a2b2d;
-      color: white;
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 12px;
-      white-space: nowrap;
+    /* --- PILLULES DE SOURCE STYLE RECHERCHE GOOGLE --- */
+    .alu-source-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background-color: #2a2b2d;
       border: 1px solid #303133;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      z-index: 100;
-      pointer-events: none;
+      border-radius: 12px;
+      padding: 2px 8px;
+      font-size: 11px;
+      color: #bdc1c6;
+      margin-left: 6px;
+      vertical-align: middle;
+      text-decoration: none;
     }
-    #sidebar-backdrop {
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      background: rgba(0,0,0,0.45) !important;
+    .alu-source-badge:hover {
+      background-color: #333537;
     }
+    .alu-source-icon {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+    }
+    /* --- STYLES DES MESSAGES ET RENDU MARKDOWN --- */
+    .alu-msg-content {
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .alu-msg-content h1, .alu-msg-content h2, .alu-msg-content h3 {
+      font-weight: 600;
+      color: #ffffff;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .alu-msg-content h1 { font-size: 1.5rem; }
+    .alu-msg-content h2 { font-size: 1.3rem; }
+    .alu-msg-content h3 { font-size: 1.1rem; }
+    
+    .alu-msg-content p {
+      margin-bottom: 0.75rem;
+    }
+    
+    .alu-msg-content ul, .alu-msg-content ol {
+      margin-left: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .alu-msg-content ul { list-style-type: disc; }
+    .alu-msg-content ol { list-style-type: decimal; }
+    .alu-msg-content li { margin-bottom: 0.25rem; }
+    /* Rendu des tableaux premium style Dark Mode */
+    .alu-msg-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.85rem;
+      background-color: #1a1b1c;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .alu-msg-content th, .alu-msg-content td {
+      border: 1px solid #303133;
+      padding: 10px 12px;
+      text-align: left;
+    }
+    .alu-msg-content th {
+      background-color: #202122;
+      color: #ffffff;
+      font-weight: 600;
+    }
+    .alu-msg-content tr:nth-child(even) {
+      background-color: #1e1f20;
+    }
+    .alu-msg-content code {
+      font-family: monospace;
+      background-color: #2a2b2d;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      color: #f2f2f2;
+    }
+
+    /* ==============================================================
+       GLASSMORPHISM V2 - FIX REEL - OVERLAY + BLUR VISIBLE
+       ============================================================== */
+    .alu-main {
+      position: relative !important;
+      overflow: hidden !important;
+      background: #131314 !important;
+    }
+
+    .alu-topbar {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      height: 64px !important;
+      z-index: 30 !important;
+      background: rgba(30, 31, 32, 0.55) !important;
+      backdrop-filter: blur(20px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.10) !important;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25) !important;
+    }
+
+    .alu-conversation {
+      position: relative !important;
+      height: 100% !important;
+      overflow-y: auto !important;
+      padding-top: 80px !important;
+      padding-bottom: 160px !important;
+      background: transparent !important;
+    }
+
+    .alu-composer-wrap {
+      position: absolute !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      z-index: 30 !important;
+      background: transparent !important;
+      background-image: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      padding: 0 16px 16px 16px !important;
+      pointer-events: none !important;
+    }
+
+    .alu-composer {
+      pointer-events: auto !important;
+      background: rgba(38, 39, 41, 0.75) !important;
+      backdrop-filter: blur(24px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.14) !important;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+      border-radius: 24px !important;
+    }
+
+    /* ==============================================================
+       CORRECTION RESPONSIVE COMPLÈTE ET COMPATIBILITÉ SMARTPHONE
+       ============================================================== */
     @media screen and (max-width: 768px) {
       .alu-sidebar {
         position: fixed !important;
-        left: 0 !important;
+        top: 0 !important;
+        left: -100% !important;
         width: 280px !important;
-        min-width: 280px !important;
         height: 100% !important;
-        z-index: 60 !important;
-        transform: translateX(-100%) !important;
-        transition: transform 0.45s var(--ease-spring) !important;
-        box-shadow: 20px 0 60px rgba(0,0,0,0.5) !important;
+        z-index: 50 !important;
+        transition: left 0.3s ease !important;
+        background-color: #1e1f20 !important;
+        display: flex !important;
       }
       .alu-sidebar.active {
-        transform: translateX(0) !important;
+        left: 0 !important;
       }
-      .alu-sidebar.mini {
-        width: 280px !important;
-        min-width: 280px !important;
+      
+      .alu-welcome-title, h1.alu-welcome-title {
+        font-size: 1.6rem !important;
+        line-height: 1.3 !important;
+        padding: 0 20px !important;
+        text-align: center !important;
+        display: block !important;
+        width: 100% !important;
+        word-wrap: break-word !important;
       }
-      .alu-sidebar.mini.active {
-        transform: translateX(0) !important;
+      .alu-topbar {
+        padding: 8px !important;
+        gap: 4px !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        background: rgba(30, 31, 32, 0.55) !important;
+        backdrop-filter: blur(22px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(22px) saturate(180%) !important;
       }
-      .alu-sidebar.hidden-sidebar {
-        width: 280px !important;
-        min-width: 280px !important;
-        transform: translateX(-100%) !important;
+      .alu-upgrade-btn {
+        padding: 6px 10px !important;
+        font-size: 0.7rem !important;
+        white-space: nowrap !important;
       }
-      .alu-sidebar.dragging {
-        transition: none !important;
+      .alu-composer-wrap {
+        padding: 12px 8px 8px 8px !important;
       }
-      #sidebar-fab {
-        display: none !important;
+      .alu-composer {
+        padding: 8px !important;
+        background: rgba(42, 43, 45, 0.68) !important;
+        backdrop-filter: blur(28px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+      }
+      
+      .alu-history-actions {
+        opacity: 1 !important;
       }
     }
   </style>
 </head>
 <body class="bg-[#131314] text-[#e3e3e3]">
-  <button id="sidebar-fab" title="Ouvrir Aluetoo (Ctrl+B)"><span class="material-symbols-outlined" style="font-size:22px;">dock_to_right</span></button>
   <div id="auth-screen" class="fixed inset-0 bg-[#131314] z-50 flex items-center justify-center p-4">
     <div class="bg-[#1e1f20] border border-[#303133] p-8 rounded-2xl w-full max-w-md shadow-2xl">
       <div class="flex items-center gap-2 mb-6 justify-center">
@@ -348,103 +335,98 @@
     </div>
   </div>
   <div class="alu-app hidden" id="app-container">
+    
     <aside class="alu-sidebar" id="alu-sidebar">
-      <div class="alu-sidebar-top flex items-center justify-between p-4" style="min-height:64px;">
-        <div class="alu-brand flex items-center gap-2 overflow-hidden flex-1">
+      <div class="alu-sidebar-top">
+        <div class="alu-brand">
           <div class="alu-brand-icon" style="background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.5rem; font-weight: bold;">✦</div>
-          <span class="alu-brand-name hide-on-mini font-semibold">Aluetoo</span>
+          <span class="alu-brand-name">Aluetoo</span>
         </div>
-        <!-- BOUTON REPLI NOUVEAU -->
-        <button class="alu-collapse-btn hide-on-mini" id="sidebar-collapse-btn" title="Replier (Ctrl+B)">
-          <span class="material-symbols-outlined" id="collapse-icon" style="font-size:18px;">chevron_left</span>
-        </button>
-        <!-- keep icon id for JS -->
       </div>
-      <button class="alu-new-chat flex items-center gap-2 px-3 py-3 mx-3 bg-white text-black rounded-xl text-sm font-medium transition-all" id="new-chat-btn" data-tooltip="Nouvelle conversation">
-        <span class="material-symbols-outlined">add</span> <span class="hide-on-mini">Nouvelle conversation</span>
+      <button class="alu-new-chat" id="new-chat-btn">
+        <span class="material-symbols-outlined">add</span> Nouvelle conversation
       </button>
-      <div class="alu-nav-items px-2 mt-3">
-        <div class="relative px-2 mb-2 hide-on-mini">
+      <div class="alu-nav-items">
+        <div class="relative px-2 mb-2">
           <input type="text" id="search-history" placeholder="Rechercher une discussion..." class="w-full bg-[#131314] border border-[#303133] rounded-xl pl-3 pr-3 py-2 text-xs text-white focus:outline-none focus:border-[#8ab4f8]">
         </div>
-        <button class="alu-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#2a2b2d] w-full text-left text-sm" data-tooltip="Bibliothèque" onclick="alert('Bibliothèque bientôt disponible !')">
-          <span class="material-symbols-outlined">description</span> <span class="hide-on-mini">Bibliothèque</span>
+        <button class="alu-nav-item" onclick="alert('Bibliothèque bientôt disponible !')">
+          <span class="material-symbols-outlined">description</span> Bibliothèque
         </button>
       </div>
-      <div class="alu-history-section px-2 mt-4 flex-1 overflow-y-auto">
-        <p class="alu-section-label hide-on-mini text-[10px] tracking-widest text-[#9aa0a6] uppercase px-3 mb-2">Le dernier</p>
+      <div class="alu-history-section">
+        <p class="alu-section-label">Le dernier</p>
         <div class="alu-history-list" id="history-list">
-          <div class="alu-history-empty hide-on-mini text-xs text-[#5f6368] px-3">Aucune conversation</div>
+          <div class="alu-history-empty">Aucune conversation</div>
         </div>
       </div>
-      <div class="alu-activity px-2 mb-2">
-        <button class="alu-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#2a2b2d] w-full text-left text-sm" data-tooltip="Activité" onclick="alert('Activité bientôt disponible !')">
-          <span class="material-symbols-outlined">history</span> <span class="hide-on-mini">Activité</span>
+      <div class="alu-activity">
+        <button class="alu-nav-item" onclick="alert('Activité bientôt disponible !')">
+          <span class="material-symbols-outlined">history</span> Activité
         </button>
       </div>
-      <div class="alu-user-block border-t border-[#2a2b2d] p-3 mt-auto">
-        <div class="alu-user-row flex items-center gap-3">
-          <div class="alu-avatar w-8 h-8 rounded-full bg-[#4285f4] flex items-center justify-center" id="user-avatar" style="color: white; font-weight: bold; font-size: 0.85rem;">LE</div>
-          <div class="alu-user-info hide-on-mini flex-1 overflow-hidden">
-            <p class="alu-user-name text-sm font-medium truncate" id="user-display-name">LEO</p>
+      <div class="alu-user-block">
+        <div class="alu-user-row">
+          <div class="alu-avatar" id="user-avatar" style="color: white; font-weight: bold; font-size: 0.85rem;">LE</div>
+          <div class="alu-user-info">
+            <p class="alu-user-name" id="user-display-name">LEO</p>
           </div>
-          <button class="alu-settings-btn hide-on-mini p-1.5 hover:bg-[#2a2b2d] rounded-lg" id="logout-btn" title="Se déconnecter">
+          <button class="alu-settings-btn" id="logout-btn" title="Se déconnecter">
             <span class="material-symbols-outlined">logout</span>
           </button>
         </div>
-        <div class="alu-loc-block hide-on-mini flex gap-2 mt-3 text-[11px] text-[#9aa0a6] bg-[#131314] rounded-xl p-2.5 border border-[#303133]">
+        <div class="alu-loc-block">
           <span class="material-symbols-outlined" style="font-size: 16px; margin-top: 2px;">location_on</span>
           <div>
-            <p class="alu-loc-name text-white text-xs" id="current-location">Belgique</p>
-            <p class="alu-loc-desc leading-tight">En fonction de votre lieu de résidence</p>
-            <button class="alu-loc-update text-[#8ab4f8] underline mt-1" id="update-location-btn">Mettre à jour l'emplacement</button>
+            <p class="alu-loc-name" id="current-location">Belgique</p>
+            <p class="alu-loc-desc">En fonction de votre lieu de résidence</p>
+            <button class="alu-loc-update" id="update-location-btn">Mettre à jour l'emplacement</button>
           </div>
         </div>
       </div>
     </aside>
     <div class="fixed inset-0 bg-black/50 z-40 hidden" id="sidebar-backdrop"></div>
-    <main class="alu-main flex-1">
-      <div class="alu-topbar flex items-center justify-between px-3">
+    <main class="alu-main">
+      
+      <div class="alu-topbar">
         <div class="alu-topbar-left flex items-center gap-2">
           <button class="p-2 text-gray-400 hover:text-white block md:hidden focus:outline-none" id="mobile-sidebar-toggle">
             <span class="material-symbols-outlined" style="font-size: 24px;">menu</span>
           </button>
-          <!-- BOUTON DESKTOP TOGGLE NOUVEAU -->
-          <button class="p-2 text-gray-400 hover:text-white hidden md:flex focus:outline-none alu-collapse-btn" id="desktop-sidebar-toggle" title="Toggle sidebar (Ctrl+B)">
-            <span class="material-symbols-outlined" style="font-size: 20px;">dock_to_left</span>
-          </button>
-          <span class="text-xl font-semibold tracking-tight hidden md:inline ml-2"></span>
+          <span class="text-xl font-semibold tracking-tight hidden md:inline"></span>
         </div>
         <div class="alu-topbar-right">
-          <button class="alu-upgrade-btn flex items-center gap-1.5 bg-white/10 hover:bg-white/15 border border-white/10 px-3 py-1.5 rounded-full text-xs" id="upgrade-btn">
+          <button class="alu-upgrade-btn" id="upgrade-btn">
             <span class="material-symbols-outlined" style="font-size: 18px;">auto_awesome</span> Passez à une formule supérieure
           </button>
         </div>
       </div>
       <div class="alu-conversation" id="conversation-container">
-        <div class="alu-welcome flex items-center justify-center h-full" id="welcome-screen">
-          <h1 class="alu-welcome-title text-3xl font-medium text-center" id="welcome-text">Avez-vous de nouvelles idées LEO ?</h1>
+        <div class="alu-welcome" id="welcome-screen">
+          <h1 class="alu-welcome-title" id="welcome-text">Avez-vous de nouvelles idées LEO ?</h1>
         </div>
-        <div class="alu-messages max-w-3xl mx-auto px-4" id="chat-messages"></div>
+        <div class="alu-messages" id="chat-messages"></div>
       </div>
       <div class="alu-composer-wrap">
-        <div class="alu-composer max-w-3xl mx-auto" id="composer-box" style="position: relative;">
+        <div class="alu-composer" id="composer-box" style="position: relative;">
           <div id="attached-file-preview" class="hidden flex items-center gap-2 mb-2 p-1.5 bg-[#131314] border border-[#303133] rounded-xl max-w-max text-xs">
             <span class="material-symbols-outlined text-sm text-blue-400">description</span>
             <span id="attached-file-name" class="text-gray-300 max-w- truncate">fichier.txt</span>
             <button class="text-gray-500 hover:text-red-400 ml-1" id="remove-file-btn"><span class="material-symbols-outlined text-xs">close</span></button>
           </div>
-          <textarea class="alu-textarea w-full bg-transparent p-4 outline-none resize-none text-sm" id="chat-input" placeholder="Demandez à Aluetoo" rows="1"></textarea>
-          <div class="alu-composer-bar flex items-center justify-between p-2">
-            <div class="alu-composer-tools-left flex items-center gap-1">
+          <textarea class="alu-textarea" id="chat-input" placeholder="Demandez à Aluetoo" rows="1"></textarea>
+          
+          <div class="alu-composer-bar">
+            <div class="alu-composer-tools-left">
               <input type="file" id="real-file-input" class="hidden">
-              <button class="alu-tool-btn alu-attach-btn w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10" id="attach-btn">
+              <button class="alu-tool-btn alu-attach-btn" id="attach-btn">
                 <span class="material-symbols-outlined">add</span>
               </button>
-              <button class="alu-tool-btn w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10" id="image-btn">
+              <button class="alu-tool-btn" id="image-btn">
                 <span class="material-symbols-outlined">image</span>
               </button>
             </div>
+            
             <div class="alu-composer-tools-right relative flex items-center gap-3">
               <div class="alu-model-pill alu-model-pill-btn px-3 py-1.5 bg-[#2a2b2d] rounded-xl text-xs text-gray-300 flex items-center font-medium" id="input-model-indicator-btn">
                 <span id="input-model-indicator">Fast Lite</span>
@@ -460,7 +442,7 @@
                   Aluetoo Pro <span class="text-xs text-gray-500 ml-auto" id="count-pro">(5/5)</span>
                 </button>
               </div>
-              <button class="alu-send-btn w-8 h-8 rounded-full flex items-center justify-center transition" id="send-btn" style="background: #333537; color: #7a7e84;" disabled>
+              <button class="alu-send-btn" id="send-btn" style="background: #333537; color: #7a7e84;" disabled>
                 <span class="material-symbols-outlined" style="font-size: 20px;">arrow_forward</span>
               </button>
             </div>
@@ -473,8 +455,13 @@
     <div class="bg-[#1e1f20] border border-[#303133] p-6 rounded-2xl w-full max-w-sm shadow-2xl text-center">
       <h3 class="text-lg font-medium mb-2 text-white">🎁 Message Bonus Quotidien</h3>
       <p class="text-xs text-[#9aa0a6] mb-4">Voici le code secret d'aujourd'hui. Entrez-le ci-dessous pour obtenir +1 message bonus sur Aluetoo Fast Lite !</p>
-      <div class="bg-[#131314] border border-[#303133] rounded-xl py-3 px-4 mb-4 font-mono text-xl text-[#8ab4f8] tracking-widest font-bold select-all" id="daily-code-display">...</div>
+      
+      <div class="bg-[#131314] border border-[#303133] rounded-xl py-3 px-4 mb-4 font-mono text-xl text-[#8ab4f8] tracking-widest font-bold select-all" id="daily-code-display">
+        ...
+      </div>
+      
       <input type="text" id="bonus-code-input" class="w-full bg-[#131314] border border-[#303133] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#8ab4f8] text-white mb-4 text-center uppercase font-mono" placeholder="Recopiez le code ici">
+      
       <div class="flex justify-end gap-2 w-full">
         <button id="close-bonus-modal" class="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition">Fermer</button>
         <button id="submit-bonus-btn" class="bg-[#4285f4] hover:bg-[#357ae8] text-white rounded-xl px-4 py-2 text-sm font-medium transition">Activer mon bonus</button>
@@ -483,6 +470,7 @@
   </div>
   <script>
     const GROQ_API_KEY = "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";
+    
     const modelsConfig = {
       "fast-lite": { name: "Aluetoo Fast Lite", apiName: "openai/gpt-oss-20b", limit: 20, pill: "Fast Lite" },
       "super-fast": { name: "Aluetoo Super Fast", apiName: "qwen/qwen3.8-27b", limit: 10, pill: "Super Fast" },
@@ -514,7 +502,6 @@
     document.addEventListener("DOMContentLoaded", () => {
       setupAuth();
       setupUI();
-      initUltraSidebar(); // <-- NOUVEAU
     });
     function setupAuth() {
       const authForm = document.getElementById("auth-form");
@@ -545,6 +532,7 @@
         e.preventDefault();
         const email = document.getElementById("auth-email").value.trim().toLowerCase();
         const password = document.getElementById("auth-password").value;
+        
         if (isSignUpMode) {
           const firstname = document.getElementById("auth-firstname").value.trim() || "Utilisateur";
           currentUser = { firstname, email, password };
@@ -563,6 +551,7 @@
             localStorage.setItem(`user_${email}`, JSON.stringify(currentUser));
           }
         }
+        
         localStorage.setItem("alu_session", JSON.stringify(currentUser));
         startApp();
       });
@@ -575,9 +564,11 @@
     function startApp() {
       document.getElementById("auth-screen").classList.add("hidden");
       document.getElementById("app-container").classList.remove("hidden");
+      
       document.getElementById("user-display-name").innerText = currentUser.firstname;
       document.getElementById("user-avatar").innerText = currentUser.firstname.substring(0,2).toUpperCase();
       document.getElementById("welcome-text").innerText = `Avez-vous de nouvelles idées ${currentUser.firstname.toUpperCase()} ?`;
+      
       loadSavedConversations();
       updateLimitCountersDisplay();
       checkGlobalLimits();
@@ -618,130 +609,6 @@
       const month = String(d.getMonth() + 1).padStart(2, '0');
       return { dateStr: `${d.getFullYear()}-${month}-${day}`, code: `ALU-${day}${month}` };
     }
-    /* ===== ULTRA MINIMAL 3 ETATS - LOGIQUE COMPLETE ===== */
-    function initUltraSidebar(){
-      const sidebar = document.getElementById('alu-sidebar');
-      const collapseBtn = document.getElementById('sidebar-collapse-btn');
-      const desktopToggle = document.getElementById('desktop-sidebar-toggle');
-      const fab = document.getElementById('sidebar-fab');
-      const backdrop = document.getElementById('sidebar-backdrop');
-      const icon = document.getElementById('collapse-icon');
-      let state = localStorage.getItem('alu_sidebar_state') || 'expanded';
-      function applyState(newState){
-        state = newState;
-        localStorage.setItem('alu_sidebar_state', state);
-        sidebar.classList.remove('mini','hidden-sidebar','sweeping');
-        sidebar.classList.add('sweeping');
-        setTimeout(()=> sidebar.classList.remove('sweeping'), 800);
-        if(state === 'expanded'){
-          fab.classList.remove('show');
-          if(icon) icon.innerText = 'chevron_left';
-          collapseBtn.title = 'Passer en mini (56px)';
-        } else if(state === 'mini'){
-          sidebar.classList.add('mini');
-          fab.classList.remove('show');
-          if(icon) icon.innerText = 'chevron_right';
-          collapseBtn.title = 'Fermer complètement';
-        } else if(state === 'hidden'){
-          sidebar.classList.add('hidden-sidebar');
-          setTimeout(()=> fab.classList.add('show'), 400);
-          if(icon) icon.innerText = 'dock_to_right';
-          collapseBtn.title = 'Ouvrir grand';
-        }
-      }
-      function cycle(){
-        if(state === 'expanded'){
-          applyState('mini');
-        } else if(state === 'mini'){
-          applyState('hidden');
-        } else {
-          applyState('expanded');
-        }
-      }
-      applyState(state);
-      setTimeout(()=> sidebar.classList.remove('sweeping'), 100);
-      collapseBtn?.addEventListener('click', cycle);
-      desktopToggle?.addEventListener('click', cycle);
-      fab?.addEventListener('click', ()=> applyState('expanded'));
-      sidebar.addEventListener('dblclick', (e)=>{
-        if(window.innerWidth > 768 && e.target.closest('.alu-sidebar-top')){
-          cycle();
-        }
-      });
-      let startX = 0;
-      let currentX = 0;
-      let isDragging = false;
-      let startTime = 0;
-      document.addEventListener('touchstart', (e)=>{
-        if(window.innerWidth > 768) return;
-        startX = e.touches[0].clientX;
-        startTime = Date.now();
-        if(startX < 35 || sidebar.classList.contains('active')){
-          isDragging = true;
-          sidebar.classList.add('dragging');
-        }
-      }, {passive:true});
-      document.addEventListener('touchmove', (e)=>{
-        if(!isDragging || window.innerWidth > 768) return;
-        currentX = e.touches[0].clientX;
-        let diff = currentX - startX;
-        if(!sidebar.classList.contains('active') && diff > 0){
-          let t = Math.min(diff - 280, 0);
-          sidebar.style.transform = `translateX(${t}px)`;
-          backdrop.classList.remove('hidden');
-          backdrop.style.opacity = (diff / 280) * 0.8;
-        }
-        if(sidebar.classList.contains('active') && diff < 0){
-          let t = Math.max(diff, -280);
-          sidebar.style.transform = `translateX(${t}px)`;
-          backdrop.style.opacity = (1 + t / 280) * 0.8;
-        }
-      }, {passive:true});
-      document.addEventListener('touchend', ()=>{
-        if(!isDragging) return;
-        isDragging = false;
-        sidebar.classList.remove('dragging');
-        sidebar.style.transform = '';
-        backdrop.style.opacity = '';
-        let diff = currentX - startX;
-        let elapsed = Date.now() - startTime;
-        let fast = elapsed < 300 && Math.abs(diff) > 30;
-        if(!sidebar.classList.contains('active')){
-          if(diff > 80 || (fast && diff > 30)){
-            sidebar.classList.add('active');
-            backdrop.classList.remove('hidden');
-            sidebar.classList.add('sweeping');
-            setTimeout(()=> sidebar.classList.remove('sweeping'), 800);
-          } else {
-            backdrop.classList.add('hidden');
-          }
-        } else {
-          if(diff < -80 || (fast && diff < -30)){
-            sidebar.classList.remove('active');
-            backdrop.classList.add('hidden');
-          }
-        }
-        startX = 0;
-        currentX = 0;
-      });
-      backdrop.addEventListener('click', ()=>{
-        sidebar.classList.remove('active');
-        backdrop.classList.add('hidden');
-      });
-      document.addEventListener('keydown', (e)=>{
-        if((e.key === 'b' || e.key === '[') && (e.ctrlKey || e.metaKey)){
-          e.preventDefault();
-          if(window.innerWidth > 768){
-            cycle();
-          } else {
-            sidebar.classList.toggle('active');
-            backdrop.classList.toggle('hidden', !sidebar.classList.contains('active'));
-          }
-        }
-      });
-      window._aluCycle = cycle;
-      window._aluApplyState = applyState;
-    }
     function setupUI() {
       const modelToggleBtn = document.getElementById("input-model-indicator-btn");
       const modelDropdownBottom = document.getElementById("model-dropdown-bottom");
@@ -766,7 +633,6 @@
           e.stopPropagation();
           sidebar.classList.add("active");
           backdrop.classList.remove("hidden");
-          if(window._aluTriggerSweep) window._aluTriggerSweep();
         });
       }
       backdrop.addEventListener("click", () => {
@@ -863,6 +729,7 @@
         }
         const keyClaimed = `alu_bonus_claimed_${currentUser.email}_${dateStr}`;
         if (localStorage.getItem(keyClaimed)) { alert("Déjà récupéré aujourd'hui !"); return; }
+        
         const usage = getUsage();
         usage["fast-lite"] = Math.max(0, usage["fast-lite"] - 1);
         saveUsage(usage);
@@ -872,6 +739,7 @@
         checkGlobalLimits();
       });
     }
+    // --- LOGIQUE LIVE STREAMING AVEC PARSEUR MARKDOWN INTÉGRÉ ---
     async function handleSendMessage() {
       const input = document.getElementById("chat-input");
       let text = input.value.trim();
@@ -947,6 +815,7 @@
       container.scrollTop = container.scrollHeight;
       checkGlobalLimits();
     }
+    // --- RENDU DES SOURCES INJECTÉES STYLE GOOGLE SEARCH + MARKDOWN PARSING ---
     function formatAIResponse(text) {
       let html = marked.parse(text);
       if (text.toLowerCase().includes("youtube") && !html.includes("alu-source-badge")) {
@@ -997,6 +866,7 @@
         pinned: false,
         timestamp: Date.now()
       });
+      
       localStorage.setItem(`alu_history_${currentUser.email}`, JSON.stringify(list));
       loadSavedConversations();
     }
@@ -1015,11 +885,13 @@
     function deleteChat(id, e) {
       e.stopPropagation();
       if (!confirm("Voulez-vous supprimer cette discussion ?")) return;
+      
       const saved = localStorage.getItem(`alu_history_${currentUser.email}`);
       if (!saved) return;
       let list = JSON.parse(saved);
       list = list.filter(c => c.id !== id);
       localStorage.setItem(`alu_history_${currentUser.email}`, JSON.stringify(list));
+      
       if (currentActiveChatId === id) {
         document.getElementById("chat-messages").innerHTML = "";
         conversationHistory = [];
@@ -1031,9 +903,10 @@
     function loadSavedConversations() {
       const listContainer = document.getElementById("history-list");
       const saved = localStorage.getItem(`alu_history_${currentUser.email}`);
+      
       listContainer.innerHTML = "";
       if (!saved || JSON.parse(saved).length === 0) {
-        listContainer.innerHTML = '<div class="alu-history-empty hide-on-mini">Aucune conversation</div>';
+        listContainer.innerHTML = '<div class="alu-history-empty">Aucune conversation</div>';
         return;
       }
       let items = JSON.parse(saved);
@@ -1046,6 +919,7 @@
         const title = item.prompt.length > 18 ? item.prompt.substring(0, 18) + "..." : item.prompt;
         const container = document.createElement("div");
         container.className = `alu-history-item-container ${item.pinned ? 'pinned' : ''}`;
+        
         const textBtn = document.createElement("button");
         textBtn.className = "alu-history-btn-text";
         textBtn.innerHTML = `💬 ${title}`;
@@ -1053,8 +927,10 @@
           document.getElementById("welcome-screen").classList.add("hidden");
           const chatMessages = document.getElementById("chat-messages");
           chatMessages.innerHTML = "";
+          
           currentActiveChatId = item.id;
           conversationHistory = item.history || [{ role: "user", content: item.prompt }, { role: "assistant", content: item.reply }];
+          
           conversationHistory.forEach(msg => {
             appendMessageUI(msg.role, msg.role === 'assistant' ? formatAIResponse(msg.content) : msg.content);
           });
@@ -1075,6 +951,7 @@
         deleteIcon.addEventListener("click", (e) => deleteChat(item.id, e));
         actionsDiv.appendChild(pinIcon);
         actionsDiv.appendChild(deleteIcon);
+        
         container.appendChild(textBtn);
         container.appendChild(actionsDiv);
         listContainer.appendChild(container);
