@@ -240,34 +240,29 @@
       border-radius: 24px !important;
     }
     /* ==============================================================
-       ANIMATION RETRACTABLE COMPOSER - BOUNCY + COMPACT MODE
+       COMPOSER RETRACTABLE - BOUNCY + COMPACT MODE FINAL FIX
        ============================================================== */
     .alu-composer {
       transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
-                  width 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
-                  padding 0.35s ease,
-                  background 0.35s ease !important;
+                  padding 0.35s ease !important;
       transform-origin: center bottom !important;
       will-change: transform !important;
-      overflow: hidden !important;
     }
-    /* Label compact caché par défaut */
-    .alu-compact-mode {
+    #composer-compact {
       display: none;
       align-items: center;
-      padding: 8px 4px;
-      font-size: 0.9rem;
-      color: #9aa0a6;
-      white-space: nowrap;
-      cursor: pointer;
       flex: 1;
+      font-size: 0.95rem;
+      color: #9aa0a6;
+      cursor: pointer;
+      padding: 6px 0;
+      white-space: nowrap;
     }
-    /* --- ETAT PETIT (shrink) --- */
     .alu-composer.is-shrink {
       transform: scale(0.52) !important;
-      padding: 6px 12px !important;
+      padding: 8px 14px !important;
     }
-    .alu-composer.is-shrink .alu-compact-mode {
+    .alu-composer.is-shrink #composer-compact {
       display: flex !important;
     }
     .alu-composer.is-shrink .alu-textarea,
@@ -278,25 +273,17 @@
     .alu-composer.is-shrink .alu-composer-bar {
       margin: 0 !important;
       padding: 0 !important;
-      justify-content: space-between !important;
-      align-items: center !important;
     }
-    .alu-composer.is-shrink .alu-composer-tools-right {
-      gap: 8px !important;
-    }
-    /* Pour centrer le tout */
     .alu-composer-wrap {
       display: flex !important;
       justify-content: center !important;
     }
     .alu-composer-wrap .alu-composer {
       width: 100% !important;
-      max-width: 800px !important;
+      max-width: 850px !important;
     }
     @media screen and (max-width: 768px) {
-      .alu-composer.is-shrink {
-        transform: scale(0.62) !important;
-      }
+      .alu-composer.is-shrink { transform: scale(0.68) !important; }
     }
     /* ==============================================================
        CORRECTION RESPONSIVE COMPLÈTE ET COMPATIBILITÉ SMARTPHONE
@@ -462,14 +449,12 @@
       </div>
       <div class="alu-composer-wrap">
         <div class="alu-composer" id="composer-box" style="position: relative;">
-          <div id="composer-compact" class="alu-compact-mode">
-            <span class="alu-compact-text">Demandez à Aluetoo</span>
-          </div>
           <div id="attached-file-preview" class="hidden flex items-center gap-2 mb-2 p-1.5 bg-[#131314] border border-[#303133] rounded-xl max-w-max text-xs">
             <span class="material-symbols-outlined text-sm text-blue-400">description</span>
             <span id="attached-file-name" class="text-gray-300 max-w- truncate">fichier.txt</span>
             <button class="text-gray-500 hover:text-red-400 ml-1" id="remove-file-btn"><span class="material-symbols-outlined text-xs">close</span></button>
           </div>
+          <div id="composer-compact">Demandez à Aluetoo</div>
           <textarea class="alu-textarea" id="chat-input" placeholder="Demandez à Aluetoo" rows="1"></textarea>
           
           <div class="alu-composer-bar">
@@ -793,7 +778,30 @@
         alert("Bonus accordé !");
         bonusModal.classList.add("hidden");
         checkGlobalLimits();
-      });
+      // --- COMPOSER RETRACTABLE FINAL FIX ---
+      const convEl = document.getElementById('conversation-container');
+      const composerEl = document.getElementById('composer-box');
+      const compactEl = document.getElementById('composer-compact');
+      if (convEl && composerEl) {
+        const checkShrink = () => {
+          const dist = convEl.scrollHeight - convEl.scrollTop - convEl.clientHeight;
+          if (dist > 150) {
+            composerEl.classList.add('is-shrink');
+          } else {
+            composerEl.classList.remove('is-shrink');
+          }
+        };
+        convEl.addEventListener('scroll', checkShrink, { passive: true });
+        // au chargement aussi
+        setTimeout(checkShrink, 300);
+        if (compactEl) {
+          compactEl.addEventListener('click', () => {
+            composerEl.classList.remove('is-shrink');
+            convEl.scrollTo({ top: convEl.scrollHeight, behavior: 'smooth' });
+            document.getElementById('chat-input')?.focus();
+          });
+        }
+      }
     }
     // --- LOGIQUE LIVE STREAMING AVEC PARSEUR MARKDOWN INTÉGRÉ ---
     async function handleSendMessage() {
