@@ -189,101 +189,19 @@
       color: #f2f2f2;
     }
     /* ==============================================================
-       GLASSMORPHISM V2 - FIX REEL - OVERLAY + BLUR VISIBLE
+       GLASSMORPHISM - FIX QUI NE CASSE RIEN
        ============================================================== */
-    .alu-main {
-      position: relative !important;
-      overflow: hidden !important;
-      background: #131314 !important;
-    }
     .alu-topbar {
-      position: absolute !important;
-      top: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      height: 64px !important;
-      z-index: 30 !important;
-      background: rgba(30, 31, 32, 0.55) !important;
-      backdrop-filter: blur(20px) saturate(180%) !important;
-      -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.10) !important;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25) !important;
-    }
-    .alu-conversation {
-      position: relative !important;
-      height: 100% !important;
-      overflow-y: auto !important;
-      padding-top: 80px !important;
-      padding-bottom: 160px !important;
-      background: transparent !important;
-    }
-    .alu-composer-wrap {
-      position: absolute !important;
-      bottom: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      z-index: 30 !important;
-      background: transparent !important;
-      background-image: none !important;
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
-      padding: 0 16px 16px 16px !important;
-      pointer-events: none !important;
+      background: rgba(30, 31, 32, 0.75) !important;
+      backdrop-filter: blur(16px) saturate(160%) !important;
+      -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
     }
     .alu-composer {
-      pointer-events: auto !important;
-      background: rgba(38, 39, 41, 0.75) !important;
-      backdrop-filter: blur(24px) saturate(180%) !important;
-      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
-      border: 1px solid rgba(255, 255, 255, 0.14) !important;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-      border-radius: 24px !important;
-    }
-    /* ==============================================================
-       COMPOSER RETRACTABLE - BOUNCY + COMPACT MODE FINAL FIX
-       ============================================================== */
-    .alu-composer {
-      transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
-                  padding 0.35s ease !important;
-      transform-origin: center bottom !important;
-      will-change: transform !important;
-    }
-    #composer-compact {
-      display: none;
-      align-items: center;
-      flex: 1;
-      font-size: 0.95rem;
-      color: #9aa0a6;
-      cursor: pointer;
-      padding: 6px 0;
-      white-space: nowrap;
-    }
-    .alu-composer.is-shrink {
-      transform: scale(0.52) !important;
-      padding: 8px 14px !important;
-    }
-    .alu-composer.is-shrink #composer-compact {
-      display: flex !important;
-    }
-    .alu-composer.is-shrink .alu-textarea,
-    .alu-composer.is-shrink #attached-file-preview,
-    .alu-composer.is-shrink .alu-composer-tools-left {
-      display: none !important;
-    }
-    .alu-composer.is-shrink .alu-composer-bar {
-      margin: 0 !important;
-      padding: 0 !important;
-    }
-    .alu-composer-wrap {
-      display: flex !important;
-      justify-content: center !important;
-    }
-    .alu-composer-wrap .alu-composer {
-      width: 100% !important;
-      max-width: 850px !important;
-    }
-    @media screen and (max-width: 768px) {
-      .alu-composer.is-shrink { transform: scale(0.68) !important; }
+      background: rgba(38, 39, 41, 0.82) !important;
+      backdrop-filter: blur(18px) saturate(160%) !important;
+      -webkit-backdrop-filter: blur(18px) saturate(160%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.10) !important;
     }
     /* ==============================================================
        CORRECTION RESPONSIVE COMPLÈTE ET COMPATIBILITÉ SMARTPHONE
@@ -319,9 +237,6 @@
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
-        background: rgba(30, 31, 32, 0.55) !important;
-        backdrop-filter: blur(22px) saturate(180%) !important;
-        -webkit-backdrop-filter: blur(22px) saturate(180%) !important;
       }
       .alu-upgrade-btn {
         padding: 6px 10px !important;
@@ -333,9 +248,6 @@
       }
       .alu-composer {
         padding: 8px !important;
-        background: rgba(42, 43, 45, 0.68) !important;
-        backdrop-filter: blur(28px) saturate(180%) !important;
-        -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
       }
       
       .alu-history-actions {
@@ -454,7 +366,6 @@
             <span id="attached-file-name" class="text-gray-300 max-w- truncate">fichier.txt</span>
             <button class="text-gray-500 hover:text-red-400 ml-1" id="remove-file-btn"><span class="material-symbols-outlined text-xs">close</span></button>
           </div>
-          <div id="composer-compact">Demandez à Aluetoo</div>
           <textarea class="alu-textarea" id="chat-input" placeholder="Demandez à Aluetoo" rows="1"></textarea>
           
           <div class="alu-composer-bar">
@@ -778,30 +689,7 @@
         alert("Bonus accordé !");
         bonusModal.classList.add("hidden");
         checkGlobalLimits();
-      // --- COMPOSER RETRACTABLE FINAL FIX ---
-      const convEl = document.getElementById('conversation-container');
-      const composerEl = document.getElementById('composer-box');
-      const compactEl = document.getElementById('composer-compact');
-      if (convEl && composerEl) {
-        const checkShrink = () => {
-          const dist = convEl.scrollHeight - convEl.scrollTop - convEl.clientHeight;
-          if (dist > 150) {
-            composerEl.classList.add('is-shrink');
-          } else {
-            composerEl.classList.remove('is-shrink');
-          }
-        };
-        convEl.addEventListener('scroll', checkShrink, { passive: true });
-        // au chargement aussi
-        setTimeout(checkShrink, 300);
-        if (compactEl) {
-          compactEl.addEventListener('click', () => {
-            composerEl.classList.remove('is-shrink');
-            convEl.scrollTo({ top: convEl.scrollHeight, behavior: 'smooth' });
-            document.getElementById('chat-input')?.focus();
-          });
-        }
-      }
+      });
     }
     // --- LOGIQUE LIVE STREAMING AVEC PARSEUR MARKDOWN INTÉGRÉ ---
     async function handleSendMessage() {
