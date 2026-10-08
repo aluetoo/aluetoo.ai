@@ -188,7 +188,6 @@
       font-size: 0.85rem;
       color: #f2f2f2;
     }
-
     /* ==============================================================
        GLASSMORPHISM V2 - FIX REEL - OVERLAY + BLUR VISIBLE
        ============================================================== */
@@ -197,7 +196,6 @@
       overflow: hidden !important;
       background: #131314 !important;
     }
-
     .alu-topbar {
       position: absolute !important;
       top: 0 !important;
@@ -211,7 +209,6 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.10) !important;
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25) !important;
     }
-
     .alu-conversation {
       position: relative !important;
       height: 100% !important;
@@ -220,7 +217,6 @@
       padding-bottom: 160px !important;
       background: transparent !important;
     }
-
     .alu-composer-wrap {
       position: absolute !important;
       bottom: 0 !important;
@@ -234,7 +230,6 @@
       padding: 0 16px 16px 16px !important;
       pointer-events: none !important;
     }
-
     .alu-composer {
       pointer-events: auto !important;
       background: rgba(38, 39, 41, 0.75) !important;
@@ -244,7 +239,31 @@
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
       border-radius: 24px !important;
     }
-
+    /* ==============================================================
+       ANIMATION RETRACTABLE COMPOSER - NE CHANGE PAS LE DESIGN
+       ============================================================== */
+    .alu-composer {
+      transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                  width 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+      transform-origin: center bottom !important;
+      will-change: transform !important;
+    }
+    .alu-composer.is-shrink {
+      transform: scale(0.52) !important;
+    }
+    .alu-composer-wrap {
+      display: flex !important;
+      justify-content: center !important;
+    }
+    .alu-composer-wrap .alu-composer {
+      width: 100% !important;
+      max-width: 800px !important;
+    }
+    @media screen and (max-width: 768px) {
+      .alu-composer.is-shrink {
+        transform: scale(0.62) !important;
+      }
+    }
     /* ==============================================================
        CORRECTION RESPONSIVE COMPLÈTE ET COMPATIBILITÉ SMARTPHONE
        ============================================================== */
@@ -739,6 +758,30 @@
         checkGlobalLimits();
       });
     }
+    
+    // --- ANIMATION RETRACTABLE COMPOSER - GRAND <-> PETIT AU SCROLL ---
+    (function() {
+      const conv = document.getElementById('conversation-container');
+      const composer = document.getElementById('composer-box');
+      if (!conv || !composer) return;
+      let ticking = false;
+      conv.addEventListener('scroll', () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            const distanceFromBottom = conv.scrollHeight - conv.scrollTop - conv.clientHeight;
+            // Si on est loin du bas (on lit l'historique) -> on rétracte
+            if (distanceFromBottom > 120) {
+              composer.classList.add('is-shrink');
+            } else {
+              // On revient en bas -> on redevient grand
+              composer.classList.remove('is-shrink');
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+    })();
     // --- LOGIQUE LIVE STREAMING AVEC PARSEUR MARKDOWN INTÉGRÉ ---
     async function handleSendMessage() {
       const input = document.getElementById("chat-input");
