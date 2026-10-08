@@ -240,17 +240,51 @@
       border-radius: 24px !important;
     }
     /* ==============================================================
-       ANIMATION RETRACTABLE COMPOSER - NE CHANGE PAS LE DESIGN
+       ANIMATION RETRACTABLE COMPOSER - BOUNCY + COMPACT MODE
        ============================================================== */
     .alu-composer {
-      transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                  width 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+      transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  width 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  padding 0.35s ease,
+                  background 0.35s ease !important;
       transform-origin: center bottom !important;
       will-change: transform !important;
+      overflow: hidden !important;
     }
+    /* Label compact caché par défaut */
+    .alu-compact-mode {
+      display: none;
+      align-items: center;
+      padding: 8px 4px;
+      font-size: 0.9rem;
+      color: #9aa0a6;
+      white-space: nowrap;
+      cursor: pointer;
+      flex: 1;
+    }
+    /* --- ETAT PETIT (shrink) --- */
     .alu-composer.is-shrink {
       transform: scale(0.52) !important;
+      padding: 6px 12px !important;
     }
+    .alu-composer.is-shrink .alu-compact-mode {
+      display: flex !important;
+    }
+    .alu-composer.is-shrink .alu-textarea,
+    .alu-composer.is-shrink #attached-file-preview,
+    .alu-composer.is-shrink .alu-composer-tools-left {
+      display: none !important;
+    }
+    .alu-composer.is-shrink .alu-composer-bar {
+      margin: 0 !important;
+      padding: 0 !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+    }
+    .alu-composer.is-shrink .alu-composer-tools-right {
+      gap: 8px !important;
+    }
+    /* Pour centrer le tout */
     .alu-composer-wrap {
       display: flex !important;
       justify-content: center !important;
@@ -428,6 +462,9 @@
       </div>
       <div class="alu-composer-wrap">
         <div class="alu-composer" id="composer-box" style="position: relative;">
+          <div id="composer-compact" class="alu-compact-mode">
+            <span class="alu-compact-text">Demandez à Aluetoo</span>
+          </div>
           <div id="attached-file-preview" class="hidden flex items-center gap-2 mb-2 p-1.5 bg-[#131314] border border-[#303133] rounded-xl max-w-max text-xs">
             <span class="material-symbols-outlined text-sm text-blue-400">description</span>
             <span id="attached-file-name" class="text-gray-300 max-w- truncate">fichier.txt</span>
@@ -758,30 +795,6 @@
         checkGlobalLimits();
       });
     }
-    
-    // --- ANIMATION RETRACTABLE COMPOSER - GRAND <-> PETIT AU SCROLL ---
-    (function() {
-      const conv = document.getElementById('conversation-container');
-      const composer = document.getElementById('composer-box');
-      if (!conv || !composer) return;
-      let ticking = false;
-      conv.addEventListener('scroll', () => {
-        if (!ticking) {
-          window.requestAnimationFrame(() => {
-            const distanceFromBottom = conv.scrollHeight - conv.scrollTop - conv.clientHeight;
-            // Si on est loin du bas (on lit l'historique) -> on rétracte
-            if (distanceFromBottom > 120) {
-              composer.classList.add('is-shrink');
-            } else {
-              // On revient en bas -> on redevient grand
-              composer.classList.remove('is-shrink');
-            }
-            ticking = false;
-          });
-          ticking = true;
-        }
-      });
-    })();
     // --- LOGIQUE LIVE STREAMING AVEC PARSEUR MARKDOWN INTÉGRÉ ---
     async function handleSendMessage() {
       const input = document.getElementById("chat-input");
