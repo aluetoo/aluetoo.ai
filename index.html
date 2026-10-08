@@ -188,21 +188,63 @@
       font-size: 0.85rem;
       color: #f2f2f2;
     }
+
     /* ==============================================================
-       GLASSMORPHISM - FIX QUI NE CASSE RIEN
+       GLASSMORPHISM V2 - FIX REEL - OVERLAY + BLUR VISIBLE
        ============================================================== */
+    .alu-main {
+      position: relative !important;
+      overflow: hidden !important;
+      background: #131314 !important;
+    }
+
     .alu-topbar {
-      background: rgba(30, 31, 32, 0.75) !important;
-      backdrop-filter: blur(16px) saturate(160%) !important;
-      -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      height: 64px !important;
+      z-index: 30 !important;
+      background: rgba(30, 31, 32, 0.55) !important;
+      backdrop-filter: blur(20px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.10) !important;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25) !important;
     }
+
+    .alu-conversation {
+      position: relative !important;
+      height: 100% !important;
+      overflow-y: auto !important;
+      padding-top: 80px !important;
+      padding-bottom: 160px !important;
+      background: transparent !important;
+    }
+
+    .alu-composer-wrap {
+      position: absolute !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      z-index: 30 !important;
+      background: transparent !important;
+      background-image: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      padding: 0 16px 16px 16px !important;
+      pointer-events: none !important;
+    }
+
     .alu-composer {
-      background: rgba(38, 39, 41, 0.82) !important;
-      backdrop-filter: blur(18px) saturate(160%) !important;
-      -webkit-backdrop-filter: blur(18px) saturate(160%) !important;
-      border: 1px solid rgba(255, 255, 255, 0.10) !important;
+      pointer-events: auto !important;
+      background: rgba(38, 39, 41, 0.75) !important;
+      backdrop-filter: blur(24px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.14) !important;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+      border-radius: 24px !important;
     }
+
     /* ==============================================================
        CORRECTION RESPONSIVE COMPLÈTE ET COMPATIBILITÉ SMARTPHONE
        ============================================================== */
@@ -237,6 +279,9 @@
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
+        background: rgba(30, 31, 32, 0.55) !important;
+        backdrop-filter: blur(22px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(22px) saturate(180%) !important;
       }
       .alu-upgrade-btn {
         padding: 6px 10px !important;
@@ -248,6 +293,9 @@
       }
       .alu-composer {
         padding: 8px !important;
+        background: rgba(42, 43, 45, 0.68) !important;
+        backdrop-filter: blur(28px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
       }
       
       .alu-history-actions {
